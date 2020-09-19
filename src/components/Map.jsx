@@ -3,6 +3,7 @@ import { load } from '@2gis/mapgl';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../hooks/use-stores';
 import fillMarkersContainer from '../helpers/fillMarkersContainer';
+import {showOrHidePoints} from "../helpers/showOrHidePoints";
 
 const style = {
   width: '100%',
@@ -56,25 +57,27 @@ const Map = observer(() => {
   }, [markersStore.markers]);
 
   useEffect(() => {
-    // Level 2. Решение можно улучшить сделав сравнение расстрояние между маркерами не через вектора,
+    // Level 2. Решение можно улучшить сделав сравнение расстояние между маркерами не через вектора,
     // а через через сравнение расстояний между пикселями (более сложный вариант проверки)
 
     // создаем контейнер для массивов отфильтрованных точек
     const container = fillMarkersContainer(markersPoint, []);
-    // скрываем все элементы в массивах, кроме первого
-    container.forEach((params) => {
-      params.forEach((p, idx) => idx !== 0 && p.hide())
-    });
+    // скрываем все элементы в массивах, кроме первого в зависимости от zoom
+    if(map && map.getZoom() <= 15) {
+      container.forEach((params) => {
+        showOrHidePoints(params);
+      });
+    }
 
     map && map.on('zoom', (event) => {
-      if (map.getZoom() > 16) {
+      if (map.getZoom() > 15.8) {
         container.forEach((params) => {
           params.forEach((p) => p.show())
         });
       }
       if (map.getZoom() <= 15) {
         container.forEach((params) => {
-          params.forEach((p, idx) => idx !== 0 && p.hide())
+          showOrHidePoints(params);
         });
       }
     })

@@ -34,7 +34,7 @@ const SearchBar = observer(() => {
           value={searchText}
           onChange={changeSearchText}
         />
-        <div className="App-wrapper">
+        <label className="App-wrapper">
           <input className="App-search-bar-submit" type="submit" value={''} />
           {
             loading ?
@@ -42,7 +42,7 @@ const SearchBar = observer(() => {
             :
             <FontAwesomeIcon className="App-search-bar-icon" icon={faSearch} size="lg" inverse/>
           }
-        </div>
+        </label>
       </form>
     </>
   );

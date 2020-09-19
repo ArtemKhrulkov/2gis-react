@@ -1,0 +1,7 @@
+export const showOrHidePoints = (params) => {
+  if (params.length < 3) {
+    params[0].show();
+  } else {
+    params.forEach((p, idx) => idx !== 0 && p.hide())
+  }
+}

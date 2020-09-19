@@ -30,6 +30,9 @@
   position: relative;
   align-self: baseline;
 }
+
 .App-search-bar-icon {
-  position: absolute; top: 10px; left: 10px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
